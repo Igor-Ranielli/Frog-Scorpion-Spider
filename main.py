@@ -56,6 +56,64 @@ app_2_line.place(x=255, y=0)
 app_line = Label(frame_up, width=255, anchor='center', font=('Ivy 1 bold'), bg=yellow, fg=white)
 app_line.place(x=0, y=95)
 
+global you
+global cpu
+global rounds
+global points_you
+global points_cpu
+
+points_you = 0
+points_cpu = 0
+rounds = 5
+
+# Função lógica do jogo
+def play(i):
+    global rounds
+    global points_you
+    global points_cpu
+
+    if rounds >0:
+        options = ['Frog', 'Scorpion', 'Spider']
+        cpu = random.choice(options)
+        you = i
+
+        print(you, cpu)
+
+    else:
+        end()
+# Função iniciar o jogo
+
+# configurando o frame baixo
+def play_game():
+    global icon_1
+    global icon_2
+    global icon_3
+    global b_icon_1
+    global b_icon_2
+    global b_icon_3
+    icon_1 = Image.open('Images/frog.png')
+    icon_1 = icon_1.resize((50,50), Image.ANTIALIAS)
+    icon_1 = ImageTk.PhotoImage(icon_1)
+    b_icon_1 = Button(frame_down, command=lambda: play('Frog'), width=50, image=icon_1, compound=CENTER, bg=white, fg=white, font=('Ivy 10 bold'), anchor=CENTER, relief=FLAT)
+    b_icon_1.place(x=15, y=60)
+
+    icon_2 = Image.open('Images/scorpion.png')
+    icon_2 = icon_2.resize((50,50), Image.ANTIALIAS)
+    icon_2 = ImageTk.PhotoImage(icon_2)
+    b_icon_2 = Button(frame_down, command=lambda: play('Scorpion'), width=50, image=icon_2, compound=CENTER, bg=white, fg=white, font=('Ivy 10 bold'), anchor=CENTER, relief=FLAT)
+    b_icon_2.place(x=100, y=60)
+
+    icon_3 = Image.open('Images/spider.png')
+    icon_3 = icon_3.resize((50,50), Image.ANTIALIAS)
+    icon_3 = ImageTk.PhotoImage(icon_3)
+    b_icon_3 = Button(frame_down, command=lambda: play('Spider'), width=50, image=icon_3, compound=CENTER, bg=white, fg=white, font=('Ivy 10 bold'), anchor=CENTER, relief=FLAT)
+    b_icon_3.place(x=190, y=60)
+
+# Função terminar o jogo
+def end():
+    pass
+
+
 
 b_play = Button(frame_down, command=play_game, width=30, text='Play', bg=background, fg=white, font=('Ivy 10 bold'), anchor=CENTER, relief=RAISED, overrelief=RIDGE)
 b_play.place(x=5, y=135)
