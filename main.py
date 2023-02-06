@@ -155,6 +155,9 @@ def play_game():
     global b_icon_1
     global b_icon_2
     global b_icon_3
+
+    b_play.destroy()
+
     icon_1 = Image.open('Images/frog.png')
     icon_1 = icon_1.resize((50,50), Image.ANTIALIAS)
     icon_1 = ImageTk.PhotoImage(icon_1)
@@ -175,7 +178,53 @@ def play_game():
 
 # Função terminar o jogo
 def end_game():
-    print("Jogo terminou")
+    global rounds
+    global points_you
+    global points_cpu
+    
+    # reiniciando as variáveis para zero
+    points_cpu = 0
+    points_you = 0
+    rounds = 5
+
+    # destruindo os botões de jogo
+    b_icon_1.destroy()
+    b_icon_2.destroy()
+    b_icon_3.destroy()
+
+    # definindo o vencedor
+    player_you = int(app_1_points['text'])
+    player_cpu = int(app_2_points['text'])
+
+    if player_you > player_cpu:
+        app_winner = Label(frame_down, text="Você venceu!", height=1, anchor='center', font=('Ivy 10 bold'), bg=white, fg=green)
+        app_winner.place(x=5, y=60)
+        app_line['bg'] = "green"
+        app_1_line['bg'] = "green"
+        app_2_line['bg'] = "green"
+    elif player_you < player_cpu:
+        app_winner = Label(frame_down, text="Você perdeu.", height=1, anchor='center', font=('Ivy 10 bold'), bg=white, fg=red)
+        app_winner.place(x=5, y=60)
+        app_line['bg'] = "red"
+        app_1_line['bg'] = "red"
+        app_2_line['bg'] = "red"
+    else:
+        app_winner = Label(frame_down, text="Você empatou.", height=1, anchor='center', font=('Ivy 10 bold'), bg=white, fg=yellow)
+        app_winner.place(x=5, y=60)
+        app_line['bg'] = "yellow"
+        app_1_line['bg'] = "yellow"
+        app_2_line['bg'] = "yellow"
+
+
+    def play_again():
+        app_1_points['text'] = '0'
+        app_2_points['text'] = '0'
+        app_winner.destroy()
+        b_playAgain.destroy()
+
+        play_game()
+    b_playAgain = Button(frame_down, command=play_again, width=30, text='Play Again?', bg=background, fg=white, font=('Ivy 10 bold'), anchor=CENTER, relief=RAISED, overrelief=RIDGE)
+    b_playAgain.place(x=5, y=135)
 
 
 
