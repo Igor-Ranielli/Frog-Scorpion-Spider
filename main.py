@@ -53,8 +53,11 @@ app_2.place(x=205, y=70)
 app_2_line = Label(frame_up, height=10, anchor='center', font=('Ivy 10 bold'), bg=white, fg=white)
 app_2_line.place(x=255, y=0)
 
-app_line = Label(frame_up, width=255, anchor='center', font=('Ivy 1 bold'), bg=yellow, fg=white)
+app_line = Label(frame_up, width=255, anchor='center', font=('Ivy 1 bold'), bg=white, fg=white)
 app_line.place(x=0, y=95)
+
+app_cpu = Label(frame_down, text="", height=1, anchor='center', font=('Ivy 10 bold'), bg=white, fg=white)
+app_cpu.place(x=190, y=10)
 
 global you
 global cpu
@@ -76,14 +79,75 @@ def play(i):
         options = ['Frog', 'Scorpion', 'Spider']
         cpu = random.choice(options)
         you = i
+        app_cpu['text'] = cpu
+        app_cpu['fg'] = gray
 
-        print(you, cpu)
+        # Condições para o jogo ter um vencedor
+        if you == 'Frog' and cpu == 'Frog' or you == 'Scorpion' and cpu == 'Scorpion' or you == 'Spider' and cpu == 'Spider':
+            print('Os mesmos animais foram escolhidos e ocorreu um empate')
+            app_line['bg'] = "yellow"
+            app_1_line['bg'] = "white"
+            app_2_line['bg'] = "white"
+
+        elif you == 'Frog' and cpu == 'Scorpion':
+            print('O escorpião matou o sapo com o seu ferrão, você perdeu.')
+            app_line['bg'] = "white"
+            app_1_line['bg'] = "red"
+            app_2_line['bg'] = "green"
+            points_cpu += 1
+        
+        elif you == 'Frog' and cpu == 'Spider':
+            print('O sapo engoliu a aranha com sua lingua, você ganhou.')
+            app_line['bg'] = "white"
+            app_1_line['bg'] = "green"
+            app_2_line['bg'] = "red"
+            points_you += 1
+        
+        elif you == 'Scorpion' and cpu == 'Frog':
+            print('O escorpião matou o sapo com o seu ferrão, você ganhou.')
+            app_line['bg'] = "white"
+            app_1_line['bg'] = "green"
+            app_2_line['bg'] = "red"
+            points_you += 1
+        
+        elif you == 'Scorpion' and cpu == 'Spider':
+            print('A aranha enrolou o escorpião em sua teia, você perdeu.')
+            app_line['bg'] = "white"
+            app_1_line['bg'] = "red"
+            app_2_line['bg'] = "green"
+            points_cpu += 1
+
+        elif you == 'Spider' and cpu == 'Frog':
+            print('O sapo engoliu a aranha com sua lingua, você perdeu.')
+            app_line['bg'] = "white"
+            app_1_line['bg'] = "red"
+            app_2_line['bg'] = "green"
+            points_cpu += 1
+
+        elif you == 'Spider' and cpu == 'Scorpion':
+            print('A aranha enrolou o escorpião em sua teia, você ganhou.')
+            app_line['bg'] = "white"
+            app_1_line['bg'] = "green"
+            app_2_line['bg'] = "red"
+            points_you += 1
+        
+        # Atualizando a pontuação
+        app_1_points['text'] = points_you
+        app_2_points['text'] = points_cpu
+
+        # Atualizando o número de rounds
+        rounds -= 1
+
+        
+        
+
 
     else:
-        end()
-# Função iniciar o jogo
+        app_1_points['text'] = points_you
+        app_2_points['text'] = points_cpu
+        end_game()
 
-# configurando o frame baixo
+# Função iniciar o jogo
 def play_game():
     global icon_1
     global icon_2
@@ -110,8 +174,8 @@ def play_game():
     b_icon_3.place(x=190, y=60)
 
 # Função terminar o jogo
-def end():
-    pass
+def end_game():
+    print("Jogo terminou")
 
 
 
